@@ -4,17 +4,18 @@ from puzz_8 import main, print_puzzle
 
 def draw_puzzle(canvas, puzzle):
     canvas.delete("all")
-    canvas.create_text(150, 10, text="8-Puzzle Solver", font=("Arial", 16))
-
     # Dibuja el puzzle
     for row in range(3):
         for col in range(3):
-            x0, y0 = col * 100, row * 100
+            x0, y0 = col * 100, row * 100 + 40  # Ajusta la posición vertical para dejar espacio para el título
             x1, y1 = x0 + 100, y0 + 100
             canvas.create_rectangle(x0, y0, x1, y1, outline="black", width=2)
             cell_value = puzzle[row][col]
             if cell_value != 0:
-                canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=str(cell_value), font=("Arial", 24))
+                label = canvas.create_text((x0 + x1) / 2, (y0 + y1) / 2, text=str(cell_value), font=("Arial", 24))
+                canvas.itemconfig(label, tags=f"{row}-{col}")
+
+    canvas.create_text(150, 10, text="8-Puzzle Solver", font=("Arial", 16))  # Dibuja el título
 
 def show_puzzle_in_window(puzzle_states):
     root = tk.Tk()
